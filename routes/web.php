@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', 'UserController@login');
+
+Route::get('token_exchange', 'UserController@token_exchange');
