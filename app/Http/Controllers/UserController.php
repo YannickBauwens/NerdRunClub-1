@@ -39,12 +39,12 @@ class UserController extends Controller
         $result = json_decode ($r->getBody()->getContents());
         //$access_token = $result->{'access_token'};
         //$username = $result->{'athlete'}->{'username'};
-        // dd($result);
+            // dd($result);
 
         //Retrieve the current user's STRAVA ID
         $userStravaId = $result->athlete->id;
-        // echo $userStravaId;
-        // echo "<hr>";
+            // echo $userStravaId;
+            // echo "<hr>";
 
         // Look for the current user's STRAVA ID in the database's users table
         if ((json_decode(App\User::all()->where('strava_id', $userStravaId), true)) == []) {
@@ -52,8 +52,8 @@ class UserController extends Controller
         } else {
             $databaseSearch = (json_decode(App\User::all()->where('strava_id', $userStravaId), true))["30"]['strava_id'];
         }
-        // echo $databaseSearch;
-        // echo "<hr>";
+            // echo $databaseSearch;
+            // echo "<hr>";
 
         //If user exists, update his/her data in the users table. If not, add user to the users table.
         if ($userStravaId == $databaseSearch) {
@@ -66,8 +66,8 @@ class UserController extends Controller
             $updateUser->profile = $result->athlete->profile;
             $updateUser->token = $result->access_token;
             $updateUser->save();
-            echo "updated!";
-            return view('home', ['firstname' => $updateUser->firstname]);
+                //echo "updated!";
+            return view('home', ['firstname' => $updateUser->firstname, 'profile' => $updateUser->profile]);
         } else {
             // add record
             $newUser = new App\User();
@@ -78,8 +78,8 @@ class UserController extends Controller
             $newUser->profile = $result->athlete->profile;
             $newUser->token = $result->access_token;
             $newUser->save();
-            echo "added!";
-            return view('home', $newUser);
+                //echo "added!";
+            return view('home', ['firstname' => $newUser->firstname, 'profile' => $newUser->profile]);
         }
 
     }
