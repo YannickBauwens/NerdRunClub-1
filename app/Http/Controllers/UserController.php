@@ -33,9 +33,11 @@ class UserController extends Controller
                 'code' => $token
             ]
         ]);
+
+        // Inhoud van de body van wat we terugkrijgen in variabele steken -> bevat access_token en user info
         $result = json_decode ($r->getBody()->getContents());
-        $access_token = $result->{'access_token'};
-        $username = $result->{'athlete'}->{'username'};
-        dd($username);
+        //$access_token = $result->{'access_token'};
+        //$username = $result->{'athlete'}->{'username'};
+        dd($result);
     }
 }
