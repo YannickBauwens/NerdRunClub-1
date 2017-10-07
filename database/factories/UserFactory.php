@@ -14,12 +14,15 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
-    static $password;
+    // static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'strava_id' => $faker->randomNumber($nbDigits = 6),
+        'firstname' => $faker->firstName,
+        'lastname' => $faker->lastName,
+        'sex' => $faker->randomElement($array = array ('M','F')),
+        'profile' => $faker->imageUrl($width = 124, $height = 124),
+        'token' => str_random(10),
     ];
 });
+
