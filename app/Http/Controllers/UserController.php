@@ -67,6 +67,7 @@ class UserController extends Controller
             $updateUser->token = $result->access_token;
             $updateUser->save();
             echo "updated!";
+            return view('home', ['firstname' => $updateUser->firstname]);
         } else {
             // add record
             $newUser = new App\User();
@@ -78,6 +79,7 @@ class UserController extends Controller
             $newUser->token = $result->access_token;
             $newUser->save();
             echo "added!";
+            return view('home', $newUser);
         }
 
     }
