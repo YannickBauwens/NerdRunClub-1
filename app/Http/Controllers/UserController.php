@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App;
+use App\Strava;
 
 class UserController extends Controller
 {
@@ -16,19 +17,14 @@ class UserController extends Controller
 
     public function token_exchange()
     {
-        // token uit url halen
+        // get token from url
         $token = request()->code;
 
-        // Guzzle client opzetten = naar wie/waar ga je requests sturen
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => 'https://www.strava.com/oauth/',
-            // You can set any number of default request options.
-            'timeout' => 2.0,
-        ]);
+        $strava = new Strava();
 
-        // Http request uitvoeren, we geven client_id, client_secret en de verkregen code mee als parameter
-        $r = $client->request('POST', 'token', [
+
+        // TODO: naar klasse, 2 parameters: route en array met form params
+        $r = $strava->client->request('POST', '/oauth/token', [
             'form_params' => [
                 'client_id' => env('STRAVA_ID'),
                 'client_secret' => env('STRAVA_SECRET'),
@@ -36,11 +32,7 @@ class UserController extends Controller
             ]
         ]);
 
-        // Inhoud van de body van wat we terugkrijgen in variabele steken -> bevat access_token en user info
         $result = json_decode($r->getBody()->getContents());
-        //$access_token = $result->{'access_token'};
-        //$username = $result->{'athlete'}->{'username'};
-            // dd($result);
 
         //Retrieve the current user's STRAVA ID
         $userStravaId = $result->athlete->id;
