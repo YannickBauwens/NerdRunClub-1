@@ -52,6 +52,7 @@ class UserController extends Controller
             $databaseSearch = 0;
         } else {
             $databaseSearch = (json_decode(App\User::all()->where('strava_id', $userStravaId), true))["30"]['strava_id'];
+
         }
             // echo $databaseSearch;
             // echo "<hr>";
