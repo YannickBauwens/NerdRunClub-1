@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->integer('strava_id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('sex');
+            $table->string('sex')->nullable();
             $table->string('profile');  // avatar with 124x124 pixel dimension
             $table->string('token');
             $table->timestamps();
