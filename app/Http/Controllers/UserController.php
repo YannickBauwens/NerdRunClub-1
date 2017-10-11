@@ -46,41 +46,22 @@ class UserController extends Controller
             // echo $userStravaId;
             // echo "<hr>";
 
-        // Look for the current user's STRAVA ID in the database's users table
-        if ((json_decode(App\User::all()->where('strava_id', $userStravaId), true)) == []) {
-            $databaseSearch = 0;
-        } else {
-            $databaseSearch = (json_decode(App\User::all()->where('strava_id', $userStravaId), true))["30"]['strava_id'];
-        }
-            // echo $databaseSearch;
-            // echo "<hr>";
+        // Look for user in database and either update user or make new user
 
-        //If user exists, update his/her data in the users table. If not, add user to the users table.
-        if ($userStravaId == $databaseSearch) {
-            // update record
-            $updateUser = App\User::where('strava_id', $userStravaId)->first();
-            $updateUser->strava_id = $userStravaId;
-            $updateUser->firstname = $result->athlete->firstname;
-            $updateUser->lastname = $result->athlete->lastname;
-            $updateUser->sex = $result->athlete->sex;
-            $updateUser->profile = $result->athlete->profile;
-            $updateUser->token = $result->access_token;
-            $updateUser->save();
-                //echo "updated!";
-            return view('home', ['firstname' => $updateUser->firstname, 'profile' => $updateUser->profile]);
-        } else {
-            // add record
-            $newUser = new App\User();
-            $newUser->strava_id = $userStravaId;
-            $newUser->firstname = $result->athlete->firstname;
-            $newUser->lastname = $result->athlete->lastname;
-            $newUser->sex = $result->athlete->sex;
-            $newUser->profile = $result->athlete->profile;
-            $newUser->token = $result->access_token;
-            $newUser->save();
-                //echo "added!";
-            return view('home', ['firstname' => $newUser->firstname, 'profile' => $newUser->profile]);
+        $checkUser = App\User::firstOrNew(['strava_id' => $userStravaId]);
+
+        if ($checkUser) {
+            $checkUser->strava_id = $userStravaId;
+            $checkUser->firstname = $result->athlete->firstname;
+            $checkUser->lastname = $result->athlete->lastname;
+            $checkUser->sex = $result->athlete->sex;
+            $checkUser->profile = $result->athlete->profile;
+            $checkUser->token = $result->access_token;
+            $checkUser->save();
         }
 
+        return view('home', ['firstname' => $checkUser->firstname, 'profile' => $checkUser->profile]);
+
+       
     }
 }
