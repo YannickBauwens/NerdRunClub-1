@@ -22,3 +22,4 @@ Route::get('/home', function() {
 Route::get('login', 'UserController@login');
 
 Route::get('token_exchange', 'UserController@token_exchange');
+

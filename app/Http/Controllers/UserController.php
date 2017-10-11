@@ -47,19 +47,9 @@ class UserController extends Controller
             // echo $userStravaId;
             // echo "<hr>";
 
-<<<<<<< HEAD
-        // Look for the current user's STRAVA ID in the database's users table
-        if ((json_decode(App\User::all()->where('strava_id', $userStravaId), true)) == []) {
-            $databaseSearch = 0;
-        } else {
-            $databaseSearch = (json_decode(App\User::all()->where('strava_id', $userStravaId), true))["30"]['strava_id'];
 
-        }
-            // echo $databaseSearch;
-            // echo "<hr>";
-=======
         // Look for user in database and either update user or make new user
->>>>>>> 9097c90d805384e928ad54ad1e6666c0a83e4447
+
 
         $checkUser = App\User::firstOrNew(['strava_id' => $userStravaId]);
 
