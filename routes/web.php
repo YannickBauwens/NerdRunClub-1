@@ -13,13 +13,11 @@
 
 Route::get('/', 'UserController@login');
 
-Route::get('/home', function() {
-    return view ('home');
-});
+Route::get('token_exchange', 'UserController@token_exchange');
 
 Route::get('/activities', 'ActivityController@index');
 
-// Route::get('login', 'UserController@login');
 
-Route::get('token_exchange', 'UserController@token_exchange');
+
+
 
