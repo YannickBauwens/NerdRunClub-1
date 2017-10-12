@@ -15,7 +15,7 @@ class Activity extends Model
      * @var array
      */
     protected $fillable = [
-        'strava_activity_id', 'athlete_id', 'distance', 'start_date',
+        'strava_activity_id', 'strava_id', 'distance', 'start_date',
     ];
 
     /**

@@ -1,3 +1,7 @@
 <h1>Activities</h1>
 
-<p>activity data</p>
+<p>Hi {{ $firstname }}, who has id {{ $user_id }}, these are your activities!</p>
+
+@foreach ($activities as $activity)
+    <p>This is activity {{ $activity->id }}</p>
+@endforeach

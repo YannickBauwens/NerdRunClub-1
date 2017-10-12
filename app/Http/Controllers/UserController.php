@@ -43,19 +43,18 @@ class UserController extends Controller
         // Look for user in database and either update user or make new user
 
 
-        $checkUser = App\User::firstOrNew(['strava_id' => $userStravaId]);
+        $user = App\User::firstOrNew(['strava_id' => $userStravaId]);
 
-        if ($checkUser) {
-            $checkUser->strava_id = $userStravaId;
-            $checkUser->firstname = $result->athlete->firstname;
-            $checkUser->lastname = $result->athlete->lastname;
-            $checkUser->sex = $result->athlete->sex;
-            $checkUser->profile = $result->athlete->profile;
-            $checkUser->token = $result->access_token;
-            $checkUser->save();
-        }
+            $user->strava_id = $userStravaId;
+            $user->firstname = $result->athlete->firstname;
+            $user->lastname = $result->athlete->lastname;
+            $user->sex = $result->athlete->sex;
+            $user->profile = $result->athlete->profile;
+            $user->token = $result->access_token;
+            $user->save();
+            auth()->login($user);
 
-        return view('home', ['firstname' => $checkUser->firstname, 'profile' => $checkUser->profile]);
+        return view('home', ['firstname' => $user->firstname, 'profile' => $user->profile]);
 
        
     }
