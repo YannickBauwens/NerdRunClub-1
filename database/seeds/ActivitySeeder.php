@@ -2,17 +2,15 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class ActivitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-
     public function run()
     {
-        $this->call(UserSeeder::class);
-        $this->call(ActivitySeeder::class);
+        factory(\App\Activity::class, 20)->create();
     }
 }
