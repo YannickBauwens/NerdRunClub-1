@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Activity;
 use App\Strava;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -29,8 +30,7 @@ class ActivityController extends Controller
             $newActivity->strava_activity_id = $activity->id;
             $newActivity->strava_id = $activity->athlete->id;
             $newActivity->distance = $activity->distance;
-            // $newActivity->start_date = $activity->start_date;
-            $newActivity->start_date = "1986-07-06 00:00:00";
+            $newActivity->start_date = Carbon::parse($activity->start_date)->toDateTimeString();
             $newActivity->save();
         }
 

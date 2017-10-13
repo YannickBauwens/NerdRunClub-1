@@ -4,5 +4,5 @@
 
 @foreach ($activities as $activity)
     <p>This is activity {{ $activity->id }}, in which you ran {{ $activity->distance }} meters on {{
-    $activity->start_date }}.</p>
+     Carbon\Carbon::parse($activity->start_date)->format('d/m/Y') }}.</p>
 @endforeach
