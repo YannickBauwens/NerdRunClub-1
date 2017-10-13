@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Activity;
 use App\Strava;
 use Illuminate\Http\Request;
@@ -20,11 +21,22 @@ class ActivityController extends Controller
             ]
         ]);
         $result = json_decode($a->getBody()->getContents());
-        dd ($result);
+        // dd ($result);
+
+
+        foreach ($result as $activity) {
+            $newActivity = new Activity;
+            $newActivity->strava_activity_id = $activity->id;
+            $newActivity->strava_id = $activity->athlete->id;
+            $newActivity->distance = $activity->distance;
+            // $newActivity->start_date = $activity->start_date;
+            $newActivity->start_date = "1986-07-06 00:00:00";
+            $newActivity->save();
+        }
 
 
         $activities = Activity::all()->where('strava_id', $user->strava_id);
         return view('activities', ['strava_id' => $user->strava_id, 'firstname' => $user->firstname, 'activities' =>
-            $activities]);
+            $result]);
     }
 }
