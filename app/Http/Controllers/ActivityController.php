@@ -15,8 +15,7 @@ class ActivityController extends Controller
         $user = auth()->user();
         $token = $user->token;
 
-        $strava = App::make('App\Strava');
-        $data = $strava->get('/api/v3/athlete/activities', ['Authorization' => 'Bearer '.$token]);
+        $data = App::make('App\Strava')->get('/api/v3/athlete/activities', ['Authorization' => 'Bearer '.$token]);
 
 
         foreach ($data as $activity) {

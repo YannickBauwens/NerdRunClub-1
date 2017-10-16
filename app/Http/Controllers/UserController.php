@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App;
+use App\Strava;
 
 class UserController extends Controller
 {
+
     public function login()
     {
        return view('welcome');
@@ -19,8 +21,7 @@ class UserController extends Controller
         // get token from url
         $token = request()->code;
 
-        $strava = App::make('App\Strava');
-        $data = $strava->post('/oauth/token', ['code' => $token]);
+        $data = App::make('App\Strava')->post('/oauth/token', ['code' => $token]);
 
         //Retrieve the current user's STRAVA ID
         $userStravaId = $data->athlete->id;
