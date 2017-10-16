@@ -37,6 +37,6 @@ class ActivityController extends Controller
 
         $activities = Activity::all()->where('strava_id', $user->strava_id);
         return view('activities', ['strava_id' => $user->strava_id, 'firstname' => $user->firstname, 'activities' =>
-            $result]);
+            $activities]);
     }
 }
