@@ -20,7 +20,7 @@ class ActivityController extends Controller
 
 
         foreach ($data as $activity) {
-            $newActivity = new Activity;
+            $newActivity = Activity::firstOrNew(['strava_activity_id' => $activity->id]);;
             $newActivity->strava_activity_id = $activity->id;
             $newActivity->strava_id = $activity->athlete->id;
             $newActivity->distance = $activity->distance;
@@ -31,6 +31,6 @@ class ActivityController extends Controller
 
         $activities = Activity::all()->where('strava_id', $user->strava_id);
         return view('activities', ['strava_id' => $user->strava_id, 'firstname' => $user->firstname, 'activities' =>
-            $data]);
+            $activities]);
     }
 }

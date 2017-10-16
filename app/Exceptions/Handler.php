@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class Handler extends ExceptionHandler
 {
@@ -43,15 +45,17 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        if ($exception) {
-            return response()->view('login', [], 500);
+        //check if exception is an instance of ModelNotFoundException.
+        if ($e instanceof ClientException) {
+            // normal 404 view page feedback
+            return response()->view('login', [], 400);
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }
