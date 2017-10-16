@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'strava' => [
+        'model' => App\Strava::class,
+        'key' => env('STRAVA_ID'),
+        'secret' => env('STRAVA_SECRET'),
+    ],
+
 ];

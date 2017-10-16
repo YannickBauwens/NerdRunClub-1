@@ -15,17 +15,11 @@ class ActivityController extends Controller
         $user = auth()->user();
         $token = $user->token;
 
-        $strava = new Strava();
-        $a = $strava->client->request('GET', '/api/v3/athlete/activities', [
-            'headers' => [
-                'Authorization' => 'Bearer '.$token
-            ]
-        ]);
-        $result = json_decode($a->getBody()->getContents());
-        // dd ($result);
+        $strava = App::make('App\Strava');
+        $data = $strava->get('/api/v3/athlete/activities', ['Authorization' => 'Bearer '.$token]);
 
 
-        foreach ($result as $activity) {
+        foreach ($data as $activity) {
             $newActivity = new Activity;
             $newActivity->strava_activity_id = $activity->id;
             $newActivity->strava_id = $activity->athlete->id;
@@ -37,6 +31,6 @@ class ActivityController extends Controller
 
         $activities = Activity::all()->where('strava_id', $user->strava_id);
         return view('activities', ['strava_id' => $user->strava_id, 'firstname' => $user->firstname, 'activities' =>
-            $result]);
+            $data]);
     }
 }
